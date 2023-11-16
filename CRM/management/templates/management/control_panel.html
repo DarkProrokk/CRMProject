@@ -2,7 +2,7 @@
 {% block title %} {{title}} {% endblock %}
 
 {% block content%}
-{% for proj in all_proj %}
+{% for proj, tasks in all_proj.items %}
 <div class="panel">
     <div class="panel__title">
         <h2>{{proj.title}}</h2>
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="task__container">
-        {% for task in proj.task_set.all %}
+        {% for task in tasks %}
         <div class="task__{{task.is_done}}">
             <div class="task__title"><a href="#">{{task.title}}</a></div>
             <div class="task__done">{{task.is_done}}
@@ -37,4 +37,12 @@
     </div>
 </div>
 {% endfor %}
+<div class="b-container">
+    Sample Text
+</div>
+<div class="b-popup">
+    <div class="b-popup-content">
+        Text in Popup
+    </div>
+</div>
 {% endblock %}

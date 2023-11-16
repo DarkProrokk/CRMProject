@@ -1,29 +1,35 @@
 from django.shortcuts import render, redirect
-from django.db import models
+
 from users.models import CustomUser
 from .models import Project, Task
-from django.contrib.auth.decorators import permission_required
+
+
+def get_contex(perm=None, user=None):
+    context = {}
+    all_proj = Project.objects.all()
+    if perm != 'tier_1':
+        for proj in all_proj:
+            context[proj] = proj.task_set.all()
+    else:
+        for proj in all_proj:
+            context[proj] = proj.task_set.filter(user=user)
+    return context
+
 
 def control_page(request):
-    if request.user.has_perm('tier_3(Admin)'):
-        print('meow')
-        perm = 'tier_3(Admin)'
-        all_proj = Project.objects.all()
-    elif request.user.has_perm('tier_2'):
-        all_proj = Project.objects.all()
-        perm = 'tier_2'
+    if not request.user.has_perm('tier_3(Admin') or not request.user.has_perm('tier_2'):
+        if request.user.is_authenticated:
+            data = get_contex('tier_1', request.user)
+        else:
+            data = get_contex()
     else:
-        all_proj = []
-        for proj in Project.objects.all():
-            if proj.task_set.filter(user=request.user):
-                all_proj.append(proj)
-        perm = 'tier_1'
+        data = get_contex()
     context = {
         'title': "Панель управления",
-        'all_proj': all_proj,
-        'perm': perm
+        'all_proj': data,
     }
     return render(request, template_name='management/control_panel.html', context=context)
+
 
 def test(request):
     for i in range(20):
@@ -38,6 +44,7 @@ def test(request):
         a.save()
     pass
 
+
 def done_task(request):
     data = request.POST['data']
     data_task = request.POST['data_task']
@@ -48,3 +55,4 @@ def done_task(request):
         current_task.is_done = False
     current_task.save()
     return redirect('control_page')
+
