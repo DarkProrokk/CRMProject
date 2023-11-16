@@ -56,3 +56,5 @@ def done_task(request):
     current_task.save()
     return redirect('control_page')
 
+def meow(request):
+    some_text = 'meow'
