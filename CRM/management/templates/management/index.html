@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock%} </title>
+    <link rel="stylesheet" href="{% static 'management/css/style.css' %}">
+</head>
+<body>
+<header class="header">
+    <div class="header__line">
+        <div class="container">
+            <div class="header__line-wrapper">
+                <div class="header__lng">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="header__wraper">
+            <div class="header__block">
+                <nav class="nav">
+                    <a class="nav__link active" href="{% url 'control_page' %}">
+                        Панель
+                    </a>
+                    <a class="nav__link" href="/admin/">
+                        Admin
+                    </a>
+                    <a class="nav__link" href="#">
+                        Catalog
+                    </a>
+                    <a class="nav__link" href="#">
+                        Reservation
+                    </a>
+                </nav>
+            </div>
+
+            <div class="header__block right">
+                <div class="header__actions">
+                    <a class="header__link" href="{% url 'auth' %}">
+                        <button type="submit">{{user}}</button>
+                    </a>
+                    <a class="header__link" href="{% url 'logout' %}" >
+                        <button type="submit">Logout</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% block content %}
+
+{%endblock%}
+</body>
+</html>
