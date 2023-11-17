@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.contrib.auth.models import Permission
 from users.models import CustomUser
 from .models import Project, Task
 
@@ -18,9 +18,12 @@ def get_contex(perm=None, user=None):
 
 
 def control_page(request):
-    if request.user.has_perm('users.tier_3(Admin') or request.user.has_perm('users.tier_2'):
+    if request.user.has_perm('users.tier_3(Admin)') or request.user.has_perm('users.tier_2'):
         data = get_contex()
-        perm = 'tier_3'
+        if request.user.has_perm('users.tier_3(Admin)'):
+            perm = 'tier_3(Admin)'
+        else:
+            perm = 'tier_2'
     else:
         if request.user.is_authenticated:
             data = get_contex('tier_1', request.user)
@@ -32,6 +35,7 @@ def control_page(request):
         'title': "Панель управления",
         'all_proj': data,
         'perm': perm,
+        'users': CustomUser.objects.all()
     }
     return render(request, template_name='management/control_panel.html', context=context)
 
@@ -67,3 +71,17 @@ def create_project(request):
         desc = request.POST['desc']
         pr = Project.objects.create(title=title, descriptions=desc, user=request.user)
     return redirect('control_page')
+
+
+
+def create_task(request):
+    if request.method == 'POST':
+        title = request.POST['task_title']
+        desc = request.POST['task_desc']
+        user = request.POST['task_user']
+        date_finish = request.POST['task_date']
+        proj = request.POST['task_proj']
+        tk = Task.objects.create(title=title, descriptions=desc, user=CustomUser.objects.get(pk=user),
+                                 date_finish=date_finish, project=Project.objects.get(pk=proj))
+    return redirect('control_page')
+

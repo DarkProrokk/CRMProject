@@ -47,14 +47,18 @@
         {% endfor %}
     </div>
 </div>
-<div class="container">
-    <div class="task_created">
-    <input type="text" class="task_title" placeholder="Введите название задачи">
-    <input type="text" class="task_desc" placeholder="Введите описание задачи">
-    <input type="datetime-local" class="task_date_finish">
-    <button type="submit">Создать задачу</button>
-    </div>
-</div>
+<h1>{{perm}}</h1>
+{% if 'tier_1' != perm %}
+{% if 'tier_2' == perm and proj.user == user %}
+{% include 'management/task_block.html' %}
+{% elif 'tier_3(Admin)' == perm %}
+{% include 'management/task_block.html' %}
+{% block task %}
+{% endblock %}
+
+{% endif %}
+
+{% endif %}
 {% endfor %}
 
 {% endblock %}

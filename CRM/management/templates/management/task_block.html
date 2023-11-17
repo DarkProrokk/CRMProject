@@ -1,0 +1,18 @@
+
+<div class="container">
+    <div class="task_created">
+            <form action="{% url 'create_task' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="task_title" placeholder="Введите название задачи">
+                <input type="text" name="task_desc" placeholder="Введите описание задачи">
+                <input type="datetime-local" name="task_date">
+                <input type="hidden" name="task_proj" value="{{proj.id}}">
+                <select name="task_user">
+                    {% for u in users %}
+                    <option value="{{u.id}}">{{u}}</option>
+                    {% endfor %}
+                </select>
+    <button type="submit">Создать задачу</button>
+            </form>
+    </div>
+</div>
