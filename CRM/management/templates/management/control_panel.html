@@ -16,7 +16,7 @@
 {% for proj, tasks in all_proj.items %}
 <div class="panel">
     <div class="panel__title">
-        <h2>{{proj.title}}</h2>
+        <h1>{{proj.title}}</h1>
     </div>
     <div class="panel__info">
         <div class="panel__statistic"> {{user.get_user_permissions}}
@@ -47,7 +47,6 @@
         {% endfor %}
     </div>
 </div>
-<h1>{{perm}}</h1>
 {% if 'tier_1' != perm %}
 {% if 'tier_2' == perm and proj.user == user %}
 {% include 'management/task_block.html' %}

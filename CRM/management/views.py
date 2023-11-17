@@ -9,11 +9,11 @@ def get_contex(perm=None, user=None):
     all_proj = Project.objects.all()
     if perm != 'tier_1':
         for proj in all_proj:
-            context[proj] = proj.task_set.all()
+            context[proj] = proj.task_set.all().order_by('-is_done')
     else:
         for proj in all_proj:
             if proj.task_set.filter(user=user):
-                context[proj] = proj.task_set.filter(user=user)
+                context[proj] = proj.task_set.filter(user=user).order_by('-is_done')
     return context
 
 
@@ -30,6 +30,8 @@ def control_page(request):
             perm = 'tier_1'
         else:
             data = get_contex()
+    if not request.user.is_authenticated:
+        return redirect('auth')
     print(data)
     context = {
         'title': "Панель управления",
