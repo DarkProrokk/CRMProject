@@ -1,6 +1,17 @@
 {% extends 'management/index.html' %}
 {% block title %} {{title}} {% endblock %}
-
+{% block header %}
+    {% if 'tier_1' != perm %}
+    <div class="project">
+        <form action="{% url 'create_project' %}" method="post">
+                                {% csrf_token %}
+            <input class="project__title" type="text" name="title" placeholder="Введите название проекта">
+            <input class="project__description" type="text" name="desc" placeholder="Введите описание">
+            <button id="project__button" type="submit">Someteasdasdxt</button>
+        </form>
+    </div>
+    {% endif%}
+{% endblock %}
 {% block content%}
 {% for proj, tasks in all_proj.items %}
 <div class="panel">
@@ -36,5 +47,14 @@
         {% endfor %}
     </div>
 </div>
+<div class="container">
+    <div class="task_created">
+    <input type="text" class="task_title" placeholder="Введите название задачи">
+    <input type="text" class="task_desc" placeholder="Введите описание задачи">
+    <input type="datetime-local" class="task_date_finish">
+    <button type="submit">Создать задачу</button>
+    </div>
+</div>
 {% endfor %}
+
 {% endblock %}
