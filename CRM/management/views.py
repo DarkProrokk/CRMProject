@@ -1,35 +1,50 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import Permission
+
 from users.models import CustomUser
 from .models import Project, Task
 
 
-def get_contex(perm=None, user=None):
+def get_context(perm=None, user=None):
+    """
+    Get the context based on the given permission level and user.
+
+    Args:
+        perm (str): The permission level.
+        user (User): The user object.
+
+    Returns:
+        dict: The context dictionary.
+    """
     context = {}
-    all_proj = Project.objects.all()
+
+    all_projects = Project.objects.all()
+
     if perm != 'tier_1':
-        for proj in all_proj:
-            context[proj] = proj.task_set.all().order_by('-is_done')
+        for project in all_projects:
+            context[project] = project.task_set.all().order_by('-is_done')
     else:
-        for proj in all_proj:
-            if proj.task_set.filter(user=user):
-                context[proj] = proj.task_set.filter(user=user).order_by('-is_done')
+        for project in all_projects:
+            tasks = project.task_set.filter(user=user).order_by('-is_done')
+            if tasks.exists():
+                context[project] = tasks
+
     return context
 
 
 def control_page(request):
     if request.user.has_perm('users.tier_3(Admin)') or request.user.has_perm('users.tier_2'):
-        data = get_contex()
+        data = get_context()
         if request.user.has_perm('users.tier_3(Admin)'):
             perm = 'tier_3(Admin)'
         else:
             perm = 'tier_2'
     else:
         if request.user.is_authenticated:
-            data = get_contex('tier_1', request.user)
+            data = get_context('tier_1', request.user)
             perm = 'tier_1'
         else:
-            data = get_contex()
+            perm = 'tier_2'
+            data = get_context()
     if not request.user.is_authenticated:
         return redirect('auth')
     print(data)
@@ -49,11 +64,11 @@ def test(request):
         a.title = 'Test'
         a.date_finish = str(time.date_finish)
         print(time)
-        a.descriptions = 'asdasda'
+        a.descriptions = 'Test'
         a.user = CustomUser.objects.get(pk=1)
         a.project = Project.objects.get(pk=6)
         a.save()
-    pass
+    return render(request, 'management/control_panel.html')
 
 
 def done_task(request):
@@ -67,13 +82,13 @@ def done_task(request):
     current_task.save()
     return redirect('control_page')
 
+
 def create_project(request):
     if request.method == 'POST':
         title = request.POST['title']
         desc = request.POST['desc']
-        pr = Project.objects.create(title=title, descriptions=desc, user=request.user)
+        Project.objects.create(title=title, descriptions=desc, user=request.user)
     return redirect('control_page')
-
 
 
 def create_task(request):
@@ -83,7 +98,6 @@ def create_task(request):
         user = request.POST['task_user']
         date_finish = request.POST['task_date']
         proj = request.POST['task_proj']
-        tk = Task.objects.create(title=title, descriptions=desc, user=CustomUser.objects.get(pk=user),
-                                 date_finish=date_finish, project=Project.objects.get(pk=proj))
+        Task.objects.create(title=title, descriptions=desc, user=CustomUser.objects.get(pk=user),
+                            date_finish=date_finish, project=Project.objects.get(pk=proj))
     return redirect('control_page')
-
