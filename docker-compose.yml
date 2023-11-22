@@ -1,0 +1,20 @@
+version: '3.5'
+services:
+  db:
+    container_name: db
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=dark
+      - POSTGRES_USER=dark
+      - POSTGRES_PASSWORD=dark
+    ports:
+      - "54321:5432"
+
+  crm:
+    container_name: crm
+    build:
+      context: .
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db

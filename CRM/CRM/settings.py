@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-vu&v-o6r_eti9rvuk02ld1y-phz8e9^7_i1hvjywzq7foqowc@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'db']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
 
     'users',
     'management',
@@ -77,16 +78,13 @@ WSGI_APPLICATION = 'CRM.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-	'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'crm',
-        'USER': 'root',
-        'PASSWORD': '123',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dark',
+        'USER': 'dark',
+        'PASSWORD': 'dark',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 

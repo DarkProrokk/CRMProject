@@ -47,7 +47,6 @@ def control_page(request):
             data = get_context()
     if not request.user.is_authenticated:
         return redirect('auth')
-    print(data)
     context = {
         'title': "Панель управления",
         'all_proj': data,
@@ -101,3 +100,6 @@ def create_task(request):
         Task.objects.create(title=title, descriptions=desc, user=CustomUser.objects.get(pk=user),
                             date_finish=date_finish, project=Project.objects.get(pk=proj))
     return redirect('control_page')
+
+
+
