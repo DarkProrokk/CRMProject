@@ -3,5 +3,6 @@ For launch:
 
 ```commandline
 - git clone git@github.com:DarkProrokk/CRMProject.git
+- cd .\CRMProject\
 - docker compose up
 ```
