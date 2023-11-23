@@ -1,7 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from django.views.generic import CreateView
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse_lazy
 from .models import CustomUser
 # Create your views here.
 
