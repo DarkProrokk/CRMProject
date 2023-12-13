@@ -1,0 +1,29 @@
+{% extends 'management/index.html' %}
+{% load static %}
+{% block stat %}
+    <link rel="stylesheet" href="{% static 'management/css/task.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="task__block">
+        <div class="task__title">
+            <div class="task__title_text">
+                {{ task.title }}
+            </div>
+        </div>
+        <div class="task__content">
+            <div class="task__description">
+                <div class="task__description_text">
+                    {{ task.descriptions }}
+                </div>
+            </div>
+            <div class="task__info">
+                <div class="task__date"> {{ task.date_finish }} </div>
+                {% if task.is_done %}
+                    <div class="task__done_user" style="background-color: red">Выполнено</div>
+                {% else %}
+                    <div class="task__done_user">Не выполнено</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

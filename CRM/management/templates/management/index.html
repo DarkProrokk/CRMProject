@@ -3,8 +3,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock%} </title>
+    <title>{% block title %} {% endblock %} </title>
     <link rel="stylesheet" href="{% static 'management/css/style.css' %}">
+    {% block stat %}
+    {% endblock %}
 </head>
 <body>
 <header class="header">
@@ -24,25 +26,16 @@
                     <a class="nav__link active" href="{% url 'control_page' %}">
                         Панель
                     </a>
-                    <a class="nav__link" href="/admin/">
-                        Admin
-                    </a>
-                    <a class="nav__link" href="#">
-                        Catalog
-                    </a>
-                    <a class="nav__link" href="#">
-                        Reservation
-                    </a>
                 </nav>
             </div>
 
             <div class="header__block right">
                 <div class="header__actions">
-                    <a class="header__link" href="{% url 'auth' %}">
-                        <button type="submit">{{user}}</button>
+                    <a class="header__link" href="{% url 'user' %}">
+                        <img class="profile__img" src="{% static 'users/img/profile.svg' %}" alt="{{ user }}">
                     </a>
-                    <a class="header__link" href="{% url 'logout' %}" >
-                        <button type="submit">Logout</button>
+                    <a class="header__link" href="{% url 'logout' %}">
+                        <img src="{% static 'users/img/exit.svg' %}" alt="exit" class="exit_img">
                     </a>
                 </div>
             </div>
@@ -52,6 +45,6 @@
 </header>
 {% block content %}
 
-{%endblock%}
+{% endblock %}
 </body>
 </html>

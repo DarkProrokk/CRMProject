@@ -1,0 +1,31 @@
+{% extends 'management/index.html' %}
+
+{% block content %}
+    <div class="container_reg">
+        <div class="login form">
+            <header>Вход</header>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        <input type="{{ field.field.widget.input_type }}"
+                               placeholder="{{ field.field.widget.attrs.placeholder }}" name="{{ field.name }}">
+                        {% if field.errors %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn button-success" id="log_button">Войти</button>
+            </form>
+            <div class="signup">
+                <span class="signup">Нет аккаунта?
+                    <a href="{% url 'signup' %}">Зарегистрироваться</a>
+                </span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

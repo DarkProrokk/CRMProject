@@ -16,7 +16,7 @@ body {
 
 }
 
-.header__line-wrapper{
+.header__line-wrapper {
     height: 30px;
     align-items: center;
     display: flex;
@@ -55,7 +55,7 @@ body {
     width: 45%;
 }
 
-.header__block.right{
+.header__block.right {
     display: flex;
     justify-content: flex-end;
 }
@@ -63,6 +63,7 @@ body {
 .nav {
     display: flex;
 }
+
 .nav__link {
     margin-right: 35px;
     color: black;
@@ -72,7 +73,7 @@ body {
     transition: color .2s ease;
 }
 
-.nav__link:hover{
+.nav__link:hover {
     color: #C7A17A
 }
 
@@ -98,7 +99,7 @@ body {
     position: relative;
 }
 
-.header__link:last-child{
+.header__link:last-child {
     margin-right: 0;
 }
 
@@ -123,17 +124,47 @@ body {
     background-color: #E4E8CA;
     margin-top: 1%;
 }
+
 .task_created {
     display: inline-block;
     position: static;
     border: 1px solid;
-    width: 500px;
-    height: 120px;
-    margin-left: 30%;
-
-
+    width: 1000px;
+    height: 290px;
+    margin-left: 8.4%;
+    background-color: #006653;
     z-index: 2;
+    border-top: 0;
 }
+
+input {
+    height: 30px;
+    width: 50%;
+    padding: 0 15px;
+    font-size: 17px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+}
+
+input[name='task_title'] {
+    margin-top: 10px;
+    margin-left: 25%;
+    height: 50px;
+}
+
+input[name='task_desc'] {
+    margin-top: 10px;
+    margin-left: 25%;
+    height: 100px;
+}
+
+input[name='task_date'] {
+    margin-top: 10px;
+    margin-left: 25%;
+}
+
+
 
 .task__container {
     display: block;
@@ -144,41 +175,57 @@ body {
     bottom: 88%;
 
 }
+
 .task__False {
     display: inline-block;
     position: relative;
-    width: 90px;
-    height: 100px;
+    width: 350px;
+    height: 150px;
     margin-left: 18%;
     margin-right: -10%;
     margin-top: 10px;
     margin-bottom: 5px;
     border: 1px solid;
+    text-align: center;
+    border-radius: 25px;
 }
+
 .task__True {
     background-color: red;
     display: inline-block;
     position: relative;
-    width: 90px;
-    height: 100px;
+    width: 350px;
+    height: 150px;
     margin-left: 18%;
     margin-right: -10%;
     margin-top: 10px;
     margin-bottom: 5px;
     border: 1px solid;
+    text-align: center;
+    border-radius: 25px;
 }
-.task__title {
-    height: 49%;
-    width: 100%;
-    border-bottom: 1px solid;
 
+.task__user {
+    width: 20%;
+    text-align: center;
+    height: 30px;
+    display: block;
+    margin-left: 40%;
+    margin-top: 3px;
+}
+
+.task__create {
+    width: 20%;
+    height: 30px;
+    margin-top: 3px;
+    margin-left: 40%;
 }
 
 .task__done {
     position: absolute;
     display: inline-block;
     border-bottom: 0;
-    border-top: 0;
+    border-top: 1px solid;
     height: 50%;
     width: 50%;
     bottom: 0;
@@ -186,27 +233,34 @@ body {
     text-align: center;
 }
 
-.task__owner{
+.task__owner {
     position: absolute;
-    display: inline-block;
+    display: flex;
     height: 50%;
     border-right: 1px solid;
     width: 50%;
     bottom: 0;
     left: 0;
     text-align: center;
+    border-top: 1px solid;
+    justify-content: center;
+    align-items: center;
 }
-.task__title a{
+
+.task__title a {
     position: absolute;
 }
+
 .task__button {
     position: absolute;
-    left: 1px;
+    left: 30px;
     font-size: 10px;
     top: 23px;
-    width: 95%;
+    width: 65%;
+    height: 40%;
 }
-.panel__title{
+
+.panel__title {
     display: block;
     height: 10%;
     text-align: center;
@@ -226,11 +280,10 @@ body {
 
 .panel__statistic {
     display: block;
-    position: relative;
     border-bottom: 1px solid;
     height: 70%;
     position: sticky;
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 
 .panel__created_by {
@@ -244,118 +297,120 @@ body {
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.container_reg{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  max-width: 430px;
-  width: 100%;
-  background: #fff;
-  border-radius: 7px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-}
-.container_reg .registration{
-  display: none;
-}
-#check:checked ~ .registration{
-  display: block;
-}
-#check:checked ~ .login{
-  display: none;
-}
-#check{
-  display: none;
-}
-.container_reg .form{
-  padding: 2rem;
-}
-.form header{
-  font-size: 2rem;
-  font-weight: 500;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
- .form input{
-   height: 60px;
-   width: 100%;
-   padding: 0 15px;
-   font-size: 17px;
-   margin-bottom: 1.3rem;
-   border: 1px solid #ddd;
-   border-radius: 6px;
-   outline: none;
- }
- .form input:focus{
-   box-shadow: 0 1px 0 rgba(0,0,0,0.2);
- }
-.form a{
-  font-size: 16px;
-  color: #009579;
-  text-decoration: none;
-}
-.form a:hover{
-  text-decoration: underline;
-}
-.form input.button{
-  color: #fff;
-  background: #009579;
-  font-size: 1.2rem;
-  font-weight: 500;
-  letter-spacing: 1px;
-  margin-top: 1.7rem;
-  cursor: pointer;
-  transition: 0.4s;
-}
-.form input.button:hover{
-  background: #006653;
-}
-.signup{
-  font-size: 17px;
-  text-align: center;
-}
-.signup label{
-  color: #009579;
-  cursor: pointer;
-}
-.signup label:hover{
-  text-decoration: underline;
+.container_reg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 430px;
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-*{
+.container_reg .form {
+    padding: 2rem;
+}
+
+.form header {
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form input {
+    height: 60px;
+    width: 100%;
+    padding: 0 15px;
+    font-size: 17px;
+    margin-bottom: 1.3rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+}
+
+.form input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form a {
+    font-size: 16px;
+    color: #009579;
+    text-decoration: none;
+}
+
+.form a:hover {
+    text-decoration: underline;
+}
+
+.form input.button {
+    color: #fff;
+    background: #009579;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-top: 1.7rem;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.form input.button:hover {
+    background: #006653;
+}
+
+.signup {
+    font-size: 17px;
+    text-align: center;
+}
+
+.signup label {
+    color: #009579;
+    cursor: pointer;
+}
+
+.signup label:hover {
+    text-decoration: underline;
+}
+
+* {
     font-family: Areal;
 }
-.b-container{
-    width:200px;
-    height:150px;
+
+.b-container {
+    width: 200px;
+    height: 150px;
     background-color: #ccc;
-    margin:0px auto;
-    padding:10px;
-    font-size:30px;
+    margin: 0px auto;
+    padding: 10px;
+    font-size: 30px;
     color: #fff;
 }
-.b-popup{
-    width:100%;
-    min-height:100%;
-    background-color: rgba(0,0,0,0.5);
-    overflow:hidden;
-    position:fixed;
-    top:0px;
+
+.b-popup {
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
 }
-.b-popup .b-popup-content{
-    margin:40px auto 0px auto;
-    width:100px;
+
+.b-popup .b-popup-content {
+    margin: 40px auto 0px auto;
+    width: 100px;
     height: 40px;
-    padding:10px;
+    padding: 10px;
     background-color: #c5c5c5;
-    border-radius:5px;
+    border-radius: 5px;
     box-shadow: 0px 0px 10px #000;
 }
 
@@ -367,34 +422,125 @@ body {
     min-height: 170px;
     min-width: 350px;
     margin-left: 30px;
+    background-color: #006653;
 }
 
 .project__title {
     display: block;
-    width: 50%;
+    width: 70%;
     margin: auto;
-    margin-left: 20%;
+    margin-left: 15%;
     margin-top: 4%;
     min-height: 25px;
 }
 
 .project__description {
     display: block;
-    width: 70%;
+    width: 80%;
+    height: 200px;
     margin: auto;
-    margin-left: 15%;
+    margin-left: 10%;
     margin-top: 4%;
     min-height: 55px;
 }
-}
+
 
 #project__button {
-    margin-left: 15%;
+    margin-left: 30%;
     margin-top: 4%;
-    min-height: 55px;
+    min-height: 35px;
+    width: 40%;
 }
 
 
+.profile__img {
+    color: red;
+}
 
+.zero_task {
+    margin-left: 25%;
+    margin-top: 15%;
+}
 
+.task__title_text {
+    display: flex;
+    align-items: center;
+}
+
+.task__block {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    border: 1px solid black;
+    background-color: #e4e8ca;
+    margin-left: 20%;
+    margin-top: 1%;
+}
+
+.task__title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    justify-content: center;
+}
+
+.task__title_text {
+
+}
+
+.task__content {
+    display: flex;
+    flex-direction: row;
+}
+
+.task__description {
+    flex: 1;
+    height: 230px;
+    border-right: 1px solid black;
+}
+
+.task__description_text {
+    margin-top: 15px;
+    margin-left: 15px;
+    word-break: break-all;
+}
+
+.task__info {
+    display: flex;
+    flex-direction: column;
+    height: 230px;
+}
+
+.task__date {
+    width: 100%;
+    height: 50%;
+    border-bottom: 1px solid black;
+}
+
+.task__done_user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50%;
+}
+
+#log_button {
+    width: 25%;
+    height: 35px;
+    margin-left: 39%;
+    color: #006653;
+    border-radius: 15px;
+    font-size: 15px;
+}
+
+#reg_button {
+    width: 37%;
+    height: 35px;
+    margin-left: 34%;
+    color: #006653;
+    border-radius: 15px;
+    font-size: 15px;
+}
 

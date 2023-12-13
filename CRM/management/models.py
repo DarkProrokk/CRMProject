@@ -6,7 +6,6 @@ from users.models import CustomUser
 class Project(models.Model):
     title = models.CharField(max_length=32)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
-    descriptions = models.TextField()
 
     def __str__(self):
         return f'{self.title}'

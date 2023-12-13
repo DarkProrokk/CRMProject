@@ -1,0 +1,9 @@
+.task__block {
+    margin-left: 20%;
+    margin-top: 10%;
+}
+
+.task__title {
+
+    border-bottom: 1px solid black;
+}

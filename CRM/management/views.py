@@ -1,20 +1,9 @@
-from django.shortcuts import render, redirect
-
+from django.shortcuts import render, redirect, Http404, HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from users.models import CustomUser
 from .models import Project, Task
 
-
 def get_context(perm=None, user=None):
-    """
-    Get the context based on the given permission level and user.
-
-    Args:
-        perm (str): The permission level.
-        user (User): The user object.
-
-    Returns:
-        dict: The context dictionary.
-    """
     context = {}
 
     all_projects = Project.objects.all()
@@ -32,6 +21,8 @@ def get_context(perm=None, user=None):
 
 
 def control_page(request):
+    if not request.user.is_authenticated:
+        return redirect('signin')
     if request.user.has_perm('users.tier_3(Admin)') or request.user.has_perm('users.tier_2'):
         data = get_context()
         if request.user.has_perm('users.tier_3(Admin)'):
@@ -45,8 +36,6 @@ def control_page(request):
         else:
             perm = 'tier_2'
             data = get_context()
-    if not request.user.is_authenticated:
-        return redirect('auth')
     context = {
         'title': "Панель управления",
         'all_proj': data,
@@ -54,20 +43,6 @@ def control_page(request):
         'users': CustomUser.objects.all()
     }
     return render(request, template_name='management/control_panel.html', context=context)
-
-
-def test(request):
-    for i in range(20):
-        a = Task()
-        time = Task.objects.get(pk=69)
-        a.title = 'Test'
-        a.date_finish = str(time.date_finish)
-        print(time)
-        a.descriptions = 'Test'
-        a.user = CustomUser.objects.get(pk=1)
-        a.project = Project.objects.get(pk=6)
-        a.save()
-    return render(request, 'management/control_panel.html')
 
 
 def done_task(request):
@@ -102,4 +77,9 @@ def create_task(request):
     return redirect('control_page')
 
 
-
+def task_view(request, pk):
+    try:
+        task = Task.objects.get(pk=pk)
+        return render(request, 'management/task.html', context={'task': task})
+    except ObjectDoesNotExist:
+        return HttpResponse("Такой задачи не существует", status=404)

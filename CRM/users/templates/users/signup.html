@@ -1,46 +1,29 @@
 {% extends 'management/index.html' %}
-
 {% block content %}
-<!--<form method="post">-->
-<!--    {% csrf_token %}-->
-<!--    {{ form.as_p }}-->
-<!--    <button type="submit" class="btn btn-success"></button>-->
-<!--</form>-->
-{% if not user.is_authenticated %}
-  <div class="container_reg">
-    <input type="checkbox" id="check">
-    <div class="login form">
-      <header>Login</header>
-      <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        <input type="text" placeholder="Enter your login" name="login">
-        <input type="password" placeholder="Enter your password" name="password">
-        <a href="#">Forgot password?</a>
-        <button type="submit" class="btn btn-success">Login</button>
-      </form>
-      <div class="signup">
-        <span class="signup">Don't have an account?
-         <label for="check">Signup</label>
-        </span>
-      </div>
+    <div class="container_reg">
+        <div class="registration form">
+            <header>Регистрация</header>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        <input type="{{ field.field.widget.input_type }}" placeholder="{{ field.field.widget.attrs.placeholder }}" name="{{ field.name }}">
+                        {% if field.errors %}
+                            <ul class="errorlist">
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn button-success" id="reg_button">Зарегистрироваться</button>
+            </form>
+            <div class="signup">
+                <span class="signup">У вас уже есть аккаунт?
+                    <a href="{% url 'signin' %}">Войти</a>
+                </span>
+            </div>
+        </div>
     </div>
-    <h1></h1>
-    <div class="registration form">
-      <header>Signup</header>
-      <form action="{% url 'signup' %}" method="post">
-        {% csrf_token %}
-        <input type="text" placeholder="Enter username" name="login">
-        <input type="password" placeholder="Create a password" name="password1">
-        <input type="password" placeholder="Confirm your password" name="password2">
-        <button type="submit" class="btn button-success">Signup</button>
-      </form>
-      <div class="signup">
-        <span class="signup">Already have an account?
-         <label for="check">Login</label>
-        </span>
-      </div>
-    </div>
-  </div>
-{% else %}
-{% endif %}
 {% endblock %}

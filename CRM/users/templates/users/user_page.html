@@ -1,0 +1,36 @@
+{% extends 'management/index.html' %}
+{% load static %}
+{% block stat %}
+    <link rel="stylesheet" href="{% static 'users/css/user_page.css' %}">
+{% endblock %}
+{% block content %}
+    {% if task %}
+    <h1>Страница пользователя - {{ request.user }}</h1>
+    {% for task in tasks %}
+        <div class="task__block">
+            <div class="task__title">
+                <div class="task__title_text">
+                    {{ task.title }}
+                </div>
+            </div>
+            <div class="task__content">
+                <div class="task__description">
+                    <div class="task__description_text">
+                        {{ task.descriptions }}
+                    </div>
+                </div>
+                <div class="task__info">
+                    <div class="task__date"> {{ task.date_finish }} </div>
+                    {% if task.is_done %}
+                        <div class="task__done_user" style="background-color: red">Выполнено</div>
+                    {% else %}
+                        <div class="task__done_user">Не выполнено</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% else %}
+        <h1 class="zero_task">Активных задач нет или они не назначены/не доступны вам.</h1>
+    {% endif %}
+{% endblock %}

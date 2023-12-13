@@ -1,63 +1,66 @@
 {% extends 'management/index.html' %}
-{% block title %} {{title}} {% endblock %}
+{% block title %} {{ title }} {% endblock %}
 {% block header %}
     {% if 'tier_1' != perm %}
-    <div class="project">
-        <form action="{% url 'create_project' %}" method="post">
-                                {% csrf_token %}
-            <input class="project__title" type="text" name="title" placeholder="Введите название проекта">
-            <input class="project__description" type="text" name="desc" placeholder="Введите описание">
-            <button id="project__button" type="submit">Someteasdasdxt</button>
-        </form>
-    </div>
-    {% endif%}
+        <div class="project">
+            <form action="{% url 'create_project' %}" method="post">
+                {% csrf_token %}
+                <input class="project__title" type="text" name="title" placeholder="Введите название проекта">
+                <input class="project__description" type="text" name="desc" placeholder="Введите описание">
+                <button id="project__button" type="submit">Создать проект</button>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}
-{% block content%}
-{% for proj, tasks in all_proj.items %}
-<div class="panel">
-    <div class="panel__title">
-        <h1>{{proj.title}}</h1>
-    </div>
-    <div class="panel__info">
-        <div class="panel__statistic"> {{user.get_user_permissions}}
-        </div>
-        <div class="panel__created_by">
-            <h2>Project created by {{proj.user}}</h2>
-        </div>
-    </div>
-    <div class="task__container">
-        {% for task in tasks %}
-        <div class="task__{{task.is_done}}">
-            <div class="task__title"><a href="#">{{task.title}}</a></div>
-            <div class="task__done">{{task.is_done}}
-                <form action="{% url 'task_done' %}"  method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="data_task" value="{{task.pk}}">
-                    {% if task.is_done == True %}
-                    <input type="hidden" name="data" value="False">
-                    <button type="submit" class="task__button">False</button>
-                    {% else %}
-                        <input type="hidden" name="data" value="True">
-                        <button type="submit" class="task__button">True!</button>
-                    {% endif %}
-                </form>
+{% block content %}
+    {% if all_proj %}
+        {% for proj, tasks in all_proj.items %}
+            <div class="panel">
+                <div class="panel__title">
+                    <h1>{{ proj.title }}</h1>
+                </div>
+                <div class="panel__info">
+                    <div class="panel__created_by">
+                        <h2>Проект создан: {{ proj.user }}</h2>
+                    </div>
+                </div>
+                <div class="task__container">
+                    {% for task in tasks %}
+                        <div class="task__{{ task.is_done }}">
+                            <div class="task__title">
+                                <a href="{% url 'task' task.pk %}">{{ task.title }}</a>
+                            </div>
+                            <div class="task__done">{{ task.is_done }}
+                                <form action="{% url 'task_done' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="data_task" value="{{ task.pk }}">
+                                    {% if task.is_done == True %}
+                                        <input type="hidden" name="data" value="False">
+                                        <button type="submit" class="task__button">False</button>
+                                    {% else %}
+                                        <input type="hidden" name="data" value="True">
+                                        <button type="submit" class="task__button">True!</button>
+                                    {% endif %}
+                                </form>
+                            </div>
+                            <div class="task__owner">{{ task.user }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="task__owner">{{task.user}}</div>
-        </div>
+            {% if 'tier_1' != perm %}
+                {% if 'tier_2' == perm and proj.user == user %}
+                    {% include 'management/task_block.html' %}
+                {% elif 'tier_3(Admin)' == perm %}
+                    {% include 'management/task_block.html' %}
+                    {% block task %}
+                    {% endblock %}
+
+                {% endif %}
+
+            {% endif %}
         {% endfor %}
-    </div>
-</div>
-{% if 'tier_1' != perm %}
-{% if 'tier_2' == perm and proj.user == user %}
-{% include 'management/task_block.html' %}
-{% elif 'tier_3(Admin)' == perm %}
-{% include 'management/task_block.html' %}
-{% block task %}
-{% endblock %}
-
-{% endif %}
-
-{% endif %}
-{% endfor %}
-
+    {% else %}
+        <h1 class="zero_task">Активных задач нет или они не назначены/не доступны вам.</h1>
+    {% endif %}
 {% endblock %}
